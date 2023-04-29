@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
@@ -19,7 +20,7 @@ router.post("/register", async (req, res) => {
 
     // Create a new user
     const newUser = new User({
-      fullName: req.body.username,
+      fullName: req.body.fullName,
       email: req.body.email,
       password: hashedPassword,
     });
@@ -33,7 +34,7 @@ router.post("/register", async (req, res) => {
       .json({ message: "User registered successfully", user: savedUser });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: err });
   }
 });
 
@@ -60,7 +61,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     // Return a response to the client
