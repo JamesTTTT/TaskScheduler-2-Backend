@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
+const projectRoutes = require("./routes/project");
 
 const mongoose = require("mongoose");
 
@@ -32,3 +33,4 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
