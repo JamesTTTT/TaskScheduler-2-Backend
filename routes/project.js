@@ -7,7 +7,7 @@ const router = express.Router();
 // Create a new project
 router.post("/create", authMiddleware, async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, description } = req.body;
 
     // Use the user ID from the authMiddleware
     const userId = req.userId;
@@ -21,6 +21,7 @@ router.post("/create", authMiddleware, async (req, res) => {
     // Create a new project
     const newProject = new Project({
       title: title,
+      description: description,
       user: userId,
       tasks: [],
     });
@@ -38,9 +39,10 @@ router.post("/create", authMiddleware, async (req, res) => {
   }
 });
 
+// Get all of the users projects
 router.get("/", authMiddleware, async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.userId;
     const projects = await Project.find({ user: userId }).populate("tasks");
 
     res.status(200).json(projects);

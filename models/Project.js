@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const { TaskSchema } = require("./Task");
 const ProjectSchema = new Schema(
   {
     // Basic project information
