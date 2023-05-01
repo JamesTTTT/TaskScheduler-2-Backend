@@ -55,6 +55,11 @@ const TaskSchema = new Schema(
         ref: "Subtask",
       },
     ],
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: true,
+    },
 
     // Collaboration
     sharedWith: [

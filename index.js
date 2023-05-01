@@ -3,7 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const projectRoutes = require("./routes/project");
-
+const taskRoutes = require("./routes/task");
 const mongoose = require("mongoose");
 
 // Replace with your actual MongoDB connection information
@@ -34,3 +34,4 @@ app.listen(PORT, () => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
