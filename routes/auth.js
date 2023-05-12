@@ -3,12 +3,10 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/register", async (req, res) => {
   try {
-    // Input validation: add validation logic based on your requirements
-
-    // Check if the user already exists
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -40,9 +38,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    // Input validation: add validation logic based on your requirements
-
-    // Check if the user exists
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -66,6 +61,20 @@ router.post("/login", async (req, res) => {
 
     // Return a response to the client
     res.status(200).json({ message: "Login successful", token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/details", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const { password, ...other } = user._doc;
+    res.status(200).json(other);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
