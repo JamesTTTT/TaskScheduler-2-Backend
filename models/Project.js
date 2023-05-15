@@ -20,8 +20,19 @@ const ProjectSchema = new Schema(
       required: true,
     },
 
+    requirements: {
+      type: [String],
+    },
+
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
+
     // Task relationships
-    tasks: [TaskSchema],
+    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
 
     // Collaboration
     sharedWith: [

@@ -23,6 +23,8 @@ router.post("/create", authMiddleware, async (req, res) => {
       title: title,
       description: description,
       user: userId,
+      tags: [],
+      requirements: [],
       tasks: [],
     });
 
