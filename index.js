@@ -8,20 +8,15 @@ const recommendationRoutes = require("./routes/openAI");
 
 const mongoose = require("mongoose");
 
-// Replace with your actual MongoDB connection information
-const mongoURI =
-  "mongodb+srv://JTMdev:Taylordev123@taskscheduler.pfisz8i.mongodb.net/test";
+const dbUrl = process.env.DB_URL;
 
 mongoose
-  .connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected…"))
+  .catch((err) => console.log(err));
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
